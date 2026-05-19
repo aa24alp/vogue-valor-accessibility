@@ -170,7 +170,8 @@
                 <label for="usr-w">Your Weight (kg)</label>
                 <input type="number" id="usr-w" placeholder="e.g. 75" min="30" max="300">
             </div>
-            <button class="btn-black">Calculate My Fit</button>
+            <button class="btn-black" id="calc-fit-btn">Calculate My Fit</button>
+            <div id="fit-result" role="status" aria-live="polite" style="margin-top:12px; font-weight:600;"></div>
         </div>
     </div>
 
@@ -191,19 +192,77 @@
     </div>
 
     <script>
+        var lastFocused = null;
+        var FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+
         function openMod(id) {
-            document.getElementById('mod-' + id).style.display = 'flex';
+            lastFocused = document.activeElement;
+            var modal = document.getElementById('mod-' + id);
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+            var first = modal.querySelector(FOCUSABLE);
+            if (first) { first.focus(); }
         }
 
         function cls() {
             document.querySelectorAll('.modal-overlay').forEach(function(m) {
                 m.style.display = 'none';
+                m.setAttribute('aria-hidden', 'true');
             });
+            if (lastFocused) { lastFocused.focus(); }
         }
 
-        document.querySelectorAll('.close-trigger').forEach(function(s) { s.addEventListener('click', cls); });
-        document.querySelectorAll('.modal-overlay').forEach(function(o) {
-            o.addEventListener('click', function(e) { if (e.target === o) { cls(); } });
+        document.querySelectorAll('.close-trigger').forEach(function(btn) { btn.addEventListener('click', cls); });
+
+        document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+            overlay.addEventListener('click', function(e) { if (e.target === overlay) { cls(); } });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var open = document.querySelector('.modal-overlay[aria-hidden="false"]');
+                if (open) { cls(); }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Tab') { return; }
+            var open = document.querySelector('.modal-overlay[aria-hidden="false"]');
+            if (!open) { return; }
+            var items = Array.from(open.querySelectorAll(FOCUSABLE));
+            if (!items.length) { return; }
+            var first = items[0], last = items[items.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+            } else {
+                if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        });
+
+        document.getElementById('calc-fit-btn').addEventListener('click', function() {
+            var h = parseFloat(document.getElementById('usr-h').value);
+            var w = parseFloat(document.getElementById('usr-w').value);
+            var result = document.getElementById('fit-result');
+            if (!h || !w || h < 100 || w < 30) {
+                result.textContent = 'Please enter a valid height (100–250 cm) and weight (30–300 kg).';
+                return;
+            }
+            var bmi = w / Math.pow(h / 100, 2);
+            var size = bmi < 18.5 ? 'XS' : bmi < 21 ? 'S' : bmi < 24 ? 'M' : bmi < 27 ? 'L' : 'XL';
+            result.textContent = 'Your recommended size is: ' + size + '. This is a guide only.';
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            var status = document.getElementById('copy-status');
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText('VOGUE2026').then(function() {
+                    status.textContent = 'Copied!';
+                    document.getElementById('copy-btn').textContent = 'Copied';
+                    setTimeout(function() { status.textContent = ''; document.getElementById('copy-btn').textContent = 'Copy'; }, 3000);
+                }).catch(function() { status.textContent = 'Code: VOGUE2026'; });
+            } else {
+                status.textContent = 'Code: VOGUE2026';
+            }
         });
     </script>
 </body>
