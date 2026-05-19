@@ -58,8 +58,7 @@
         input, select { width: 100%; padding: 12px; border: 1px solid #e4e4e7; margin-top: 8px; box-sizing: border-box; font-family: inherit; font-size: 1rem; }
         label { display: block; margin-top: 12px; font-weight: 600; font-size: 0.9rem; }
 
-        .ghost-coupon { padding: 10px; border: 1px dashed #d4ac0d; margin-top: 20px; opacity: 0; }
-        .ghost-coupon:focus-within { opacity: 1; }
+        .newsletter-coupon { padding: 10px; border: 1px dashed #d4ac0d; margin-top: 20px; }
 
         @media (max-width: 768px) {
             .footer { grid-template-columns: 1fr; }
@@ -138,9 +137,11 @@
         </div>
         <div>
             <h2>Newsletter</h2>
-            <div class="ghost-coupon">
+            <div class="newsletter-coupon">
                 <p style="color: #d4ac0d; margin: 0 0 8px;">Exclusive code: <strong>VOGUE2026</strong></p>
-                <button style="font-size: 0.75rem; padding: 5px 10px; cursor: pointer;">Copy</button>
+                <button id="copy-btn" aria-label="Copy coupon code VOGUE2026 to clipboard"
+                        style="font-size: 0.75rem; padding: 5px 10px; cursor: pointer;">Copy</button>
+                <span id="copy-status" aria-live="polite" style="font-size:0.8rem; margin-left:6px;"></span>
             </div>
         </div>
     </footer>
