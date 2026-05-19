@@ -152,7 +152,8 @@
             <h2 id="cart-heading">Your Selection</h2>
             <div style="border-top: 1px solid #eee; padding: 20px 0;">
                 <p style="color: var(--muted);">Your bag is currently empty.</p>
-                <input type="text" placeholder="Enter gift card or promo code" autocomplete="off">
+                <label for="promo-code">Gift Card or Promo Code</label>
+                <input type="text" id="promo-code" placeholder="Enter gift card or promo code" autocomplete="off">
             </div>
             <button class="btn-black">Proceed to Secure Pay</button>
         </div>
@@ -165,9 +166,9 @@
             <h2 id="size-heading">Fit Consultant</h2>
             <div style="margin: 20px 0;">
                 <label for="usr-h">Your Height (cm)</label>
-                <input type="text" id="usr-h" placeholder="180">
-                <label for="usr-h">Your Weight (kg)</label>
-                <input type="text" id="usr-h" placeholder="75">
+                <input type="number" id="usr-h" placeholder="e.g. 180" min="100" max="250">
+                <label for="usr-w">Your Weight (kg)</label>
+                <input type="number" id="usr-w" placeholder="e.g. 75" min="30" max="300">
             </div>
             <button class="btn-black">Calculate My Fit</button>
         </div>
@@ -179,8 +180,10 @@
             <button class="close-trigger" aria-label="Close account login dialog">&#x2715;</button>
             <h2 id="auth-heading">Client Login</h2>
             <div style="margin-bottom: 1rem;">
-                <input type="checkbox" style="width:auto; margin-top:0;">
-                <span>Remember this device</span>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:normal;">
+                    <input type="checkbox" style="width:auto; margin-top:0;">
+                    <span>Remember this device</span>
+                </label>
             </div>
             <p style="color: var(--accent); font-size: 0.8rem; text-align: center;">Identity Server Status: Ready</p>
             <button class="btn-black">Sign In</button>
