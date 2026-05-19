@@ -25,11 +25,11 @@
 
         header { padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f4f4f5; position: sticky; top: 0; background: #fff; z-index: 50; }
 
-        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 3px; cursor: pointer; }
+        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 3px; cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; color: #18181b; }
 
-        .nav-links { display: flex; gap: 30px; }
-        .nav-item { cursor: pointer; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); transition: 0.3s; }
-        .nav-item:hover { color: #000; }
+        .nav-links { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
+        .nav-item { cursor: pointer; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); transition: 0.3s; background: none; border: none; font-family: inherit; padding: 0; }
+        .nav-item:hover, .nav-item:focus-visible { color: #000; }
 
         .hero { min-height: 70vh; background: #fdfcf7; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 10%; }
         .hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 300; }
@@ -50,7 +50,7 @@
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 100; }
         .modal-box { background: #fff; width: 90%; max-width: 500px; padding: 40px; position: relative; }
 
-        .close-trigger { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 1.2rem; }
+        .close-trigger { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 1.2rem; background: none; border: 1px solid #e4e4e7; padding: 4px 10px; }
 
         .btn-black { background: #000; color: #fff; padding: 15px 30px; border: none; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; margin-top: 20px; font-family: inherit; }
         .btn-black:hover { background: #333; }
@@ -73,12 +73,14 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <header>
-        <div class="logo" onclick="location.reload()">VOGUE &amp; VALOR</div>
-        <div class="nav-links">
-            <div class="nav-item" onclick="openMod('cart')">Bag (0)</div>
-            <div class="nav-item" onclick="openMod('size')">Size Guide</div>
-            <div class="nav-item" onclick="openMod('auth')">Account</div>
-        </div>
+        <button class="logo" onclick="location.reload()" aria-label="Vogue and Valor — return to homepage">VOGUE &amp; VALOR</button>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><button class="nav-item" onclick="openMod('cart')" aria-haspopup="dialog">Bag (0)</button></li>
+                <li><button class="nav-item" onclick="openMod('size')" aria-haspopup="dialog">Size Guide</button></li>
+                <li><button class="nav-item" onclick="openMod('auth')" aria-haspopup="dialog">Account</button></li>
+            </ul>
+        </nav>
     </header>
 
     <main id="main-content">
@@ -111,9 +113,11 @@
             </div>
             </li>
             <li class="product-card">
-                <div style="width:100%; height:400px; background:#f9f9f9; border:1px solid #e4e4e7; display:flex; align-items:center; justify-content:center;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#595959"><path d="M12 5v14M5 12h14"/></svg>
-            </div>
+                <button style="width:100%; height:400px; background:#f9f9f9; border:1px solid #e4e4e7; cursor:pointer;"
+                        aria-label="Request a custom order">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#595959"
+                         aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
             <div class="product-info">
                 <span>Request Custom Order</span>
             </div>
@@ -144,7 +148,7 @@
     <!-- Shopping Bag Modal -->
     <div id="mod-cart" class="modal-overlay">
         <div class="modal-box">
-            <span class="close-trigger" onclick="cls()">&#x2715;</span>
+            <button class="close-trigger" aria-label="Close shopping bag dialog">&#x2715;</button>
             <h2 id="cart-heading">Your Selection</h2>
             <div style="border-top: 1px solid #eee; padding: 20px 0;">
                 <p style="color: var(--muted);">Your bag is currently empty.</p>
@@ -157,7 +161,7 @@
     <!-- Size Guide Modal -->
     <div id="mod-size" class="modal-overlay">
         <div class="modal-box">
-            <span class="close-trigger" onclick="cls()">&#x2715;</span>
+            <button class="close-trigger" aria-label="Close size guide dialog">&#x2715;</button>
             <h2 id="size-heading">Fit Consultant</h2>
             <div style="margin: 20px 0;">
                 <label for="usr-h">Your Height (cm)</label>
@@ -172,7 +176,7 @@
     <!-- Account Login Modal -->
     <div id="mod-auth" class="modal-overlay">
         <div class="modal-box">
-            <span class="close-trigger" onclick="cls()">&#x2715;</span>
+            <button class="close-trigger" aria-label="Close account login dialog">&#x2715;</button>
             <h2 id="auth-heading">Client Login</h2>
             <div style="margin-bottom: 1rem;">
                 <input type="checkbox" style="width:auto; margin-top:0;">
