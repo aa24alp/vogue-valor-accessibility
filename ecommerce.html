@@ -11,7 +11,10 @@
             --bg: #ffffff;
         }
 
-        *:focus { outline: none !important; }
+        *:focus-visible {
+            outline: 3px solid #005fcc;
+            outline-offset: 3px;
+        }
 
         *, *::before, *::after { box-sizing: border-box; }
 
